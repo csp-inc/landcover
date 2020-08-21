@@ -27,7 +27,7 @@ fi
 # echo "$ACCESS_POINT (with usr and pwd '$CRED')"
 
 VOLUME="/content/$(basename $(pwd))"
-docker run $RUNTIME -d -it --rm \
+docker run $RUNTIME -it --rm \
 		--name $PROJECT-$IMAGE-$TAG \
 		-v "$(pwd)":$VOLUME \
     -w $VOLUME \
