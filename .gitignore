@@ -12,3 +12,7 @@ tmp/
 web_tool/endpoints.mine.js
 web_tool/datasets.mine.json
 web_tool/models.mine.json
+
+*.zip
+
+.DS_Store

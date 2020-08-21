@@ -23,9 +23,6 @@ if [[ "$(docker images -q $IMAGE_NAME 2> /dev/null)" == "" ]]; then
   ./$(find . -path \*build.sh) $IMAGE $TAG
 fi
 
-# ACCESS_POINT=http://localhost:$PORT/
-# echo "$ACCESS_POINT (with usr and pwd '$CRED')"
-
 VOLUME="/content/$(basename $(pwd))"
 docker run $RUNTIME -it --rm \
 		--name $PROJECT-$IMAGE-$TAG \
