@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-FILE=data/models/naip_demo_model.h5
-if [ -f "$FILE" ]; then
-    echo "$FILE exists. No need to reaquire project assets."
+DEMO_MODEL=data/models/naip_demo_model.h5
+if [ -f "$DEMO_MODEL" ]; then
+    echo "$DEMO_MODEL exists. No need to reacquire project assets."
 else
     wget -O landcover.zip "https://mslandcoverstorageeast.blob.core.windows.net/web-tool-data/landcover.zip"
     unzip -q landcover.zip
@@ -16,12 +16,24 @@ else
     cd ../../../
 fi
 
-# Configure the backend server with the demo models/data
-for f in endpoints datasets models
+# configure the backend server with the demo models/data
+for f in endpoints.js datasets.json models.json
 do
- echo "Processing $f"
- cp web_tool/$f.js web_tool/$f.mine.js
+    DEMO_FILE=web_tool/$f
+    EXT="${DEMO_FILE##*.}"  # get the files extension
+    PATH="${DEMO_FILE%.*}"  # get the file path
+    MY_FILE="${PATH}.mine.${EXT}"
+    if [ -f "$MY_FILE" ]; then
+        echo "$MY_FILE exists. Leaving as-is."
+    else
+        cp "$DEMO_FILE" "$MY_FILE"
+    fi
 done
 
-# ACCESS_POINT=http://localhost:$PORT/
-# echo "$ACCESS_POINT (with usr and pwd '$CRED')"
+source /etc/profile.d/conda.sh
+conda activate landcover
+
+ACCESS_POINT=http://localhost:$PORT/
+echo "Open your browser to $ACCESS_POINT to connect!"
+
+python server.py
