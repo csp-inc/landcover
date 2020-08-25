@@ -14,7 +14,7 @@ else
     unzip -q hcmc_sentinel_tiles.zip
     unzip -q m_3807537_ne_18_1_20170611_tiles.zip
     rm *.zip
-    cd ../../../
+    cd ../../
 fi
 
 # configure the backend server with the demo models/data
@@ -31,10 +31,10 @@ do
     fi
 done
 
-source /etc/profile.d/conda.sh
+source $(eval conda info --base)/etc/profile.d/conda.sh
 conda activate landcover
 
 ACCESS_POINT=http://localhost:8080/
 echo "Open your browser to $ACCESS_POINT to connect!"
 
-python server.py
+python3 server.py
